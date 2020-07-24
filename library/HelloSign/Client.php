@@ -52,6 +52,7 @@ class Client
     const SIGNATURE_REQUEST_PATH      = "signature_request";
     const SIGNATURE_REQUEST_SEND_PATH = "signature_request/send";
     const SIGNATURE_REQUEST_LIST_PATH = "signature_request/list";
+    const SIGNATURE_REQUEST_RELEASE_HOLD_PATH = "signature_request/release_hold";
 
     const SIGNATURE_REQUEST_CANCEL_PATH            = "signature_request/cancel";
     const SIGNATURE_REQUEST_REMIND_PATH            = "signature_request/remind";
@@ -529,6 +530,24 @@ class Client
         }
 
         return $list;
+    }
+
+    /**
+     * Releases a SignatureRequest from hold with the given ID
+     *
+     * @param  String $id Signature Request ID
+     * @return boolean
+     * @throws BaseException
+     */
+    public function releaseHoldSignatureRequest($id)
+    {
+        $response = $this->rest->post(
+            static::SIGNATURE_REQUEST_RELEASE_HOLD_PATH . '/' . $id
+        );
+
+        $this->checkResponse($response, false);
+
+        return true;
     }
 
     /**
